@@ -112,3 +112,6 @@ intl402/Temporal/PlainTime/prototype/toLocaleString/timezone-getoffsetnanosecond
 intl402/Temporal/PlainYearMonth/prototype/toLocaleString/timezone-getoffsetnanosecondsfor-not-callable.js
 intl402/Temporal/ZonedDateTime/prototype/era/timezone-getoffsetnanosecondsfor-not-callable.js
 intl402/Temporal/ZonedDateTime/prototype/eraYear/timezone-getoffsetnanosecondsfor-not-callable.js
+
+# Waiting on submitting tests for https://github.com/tc39/proposal-temporal/pull/1874
+built-ins/Temporal/PlainMonthDay/from/fields-string.js
