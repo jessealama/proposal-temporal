@@ -205,16 +205,6 @@ describe('DateTime', () => {
       assert(dt2.equals(dt1));
     });
   });
-  describe('dateTime.withCalendar()', () => {
-    const dt1 = PlainDateTime.from('1976-11-18T15:23:30.123456789');
-    it('works', () => {
-      const calendar = Temporal.Calendar.from('iso8601');
-      equal(`${dt1.withCalendar(calendar)}`, '1976-11-18T15:23:30.123456789');
-    });
-    it('casts its argument', () => {
-      equal(`${dt1.withCalendar('iso8601')}`, '1976-11-18T15:23:30.123456789');
-    });
-  });
   describe('dateTime.toString()', () => {
     const dt1 = PlainDateTime.from('1976-11-18T15:23');
     it('shows only non-ISO calendar if calendarName = auto', () => {
