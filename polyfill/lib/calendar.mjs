@@ -346,14 +346,22 @@ function resolveNonLunisolarMonth(calendarDate, calendar, overflow = undefined) 
     if (overflow === 'constrain') month = ES.ConstrainToRange(month, 1, monthsPerYear);
     monthCode = CreateMonthCode(month, false);
   } else {
-    if (!IsValidMonthCodeForCalendar(calendar, monthCode)) {
-      throw new RangeErrorCtor(`Invalid monthCode: ${monthCode} does not exist in calendar ${calendar}`);
+    // Defer range validation when overflow is undefined (during field resolution)
+    // to ensure TypeError for missing required fields is thrown before RangeError
+    if (overflow !== undefined) {
+      if (!IsValidMonthCodeForCalendar(calendar, monthCode)) {
+        throw new RangeErrorCtor(`Invalid monthCode: ${monthCode} does not exist in calendar ${calendar}`);
+      }
+      const { monthNumber } = ParseMonthCode(monthCode);
+      if (month !== undefined && month !== monthNumber) {
+        throw new RangeErrorCtor(`monthCode ${monthCode} and month ${month} must match if both are present`);
+      }
+      month = monthNumber;
+    } else {
+      // During field resolution, just parse monthCode without validation
+      const { monthNumber } = ParseMonthCode(monthCode);
+      month = monthNumber;
     }
-    const { monthNumber } = ParseMonthCode(monthCode);
-    if (month !== undefined && month !== monthNumber) {
-      throw new RangeErrorCtor(`monthCode ${monthCode} and month ${month} must match if both are present`);
-    }
-    month = monthNumber;
   }
   return { ...calendarDate, month, monthCode };
 }
